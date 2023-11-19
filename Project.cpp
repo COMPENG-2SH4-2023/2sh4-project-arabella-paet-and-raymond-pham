@@ -6,6 +6,8 @@
 using namespace std;
 
 #define DELAY_CONST 100000
+#define ROWS 10
+#define COLUMNS 20
 
 bool exitFlag;
 
@@ -56,7 +58,25 @@ void RunLogic(void)
 
 void DrawScreen(void)
 {
-    MacUILib_clearScreen();    
+    MacUILib_clearScreen();  
+    objPos border;
+    int x, y;
+    for(y = 0; y < ROWS; y++)
+    {
+        for(x = 0; x < COLUMNS; x++)
+        {
+            border.setObjPos(x, y, '#');
+            if(border.y == 0 || border.y == ROWS - 1 || border.x == 0 || border.x == COLUMNS - 1)              // if the cursor is on the left-most or right-most columns of the board (x=0 or x=19) print #
+            {                                                      // Similarily if the cursor is on the top-most or bottom-most rows of the board (y=0 or y = 9) print #
+                cout << border.getSymbol();
+            }
+            else
+            {
+                cout << " ";
+            }
+        }
+        cout << endl;
+    }
 
 }
 
