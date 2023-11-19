@@ -21,6 +21,8 @@ class GameMechs
     private:
         char input;
         bool exitFlag;
+        bool loseFlag;
+        int score;       //maybe static??
         
         int boardSizeX;
         int boardSizeY;
@@ -30,7 +32,11 @@ class GameMechs
         GameMechs(int boardX, int boardY);
         
         bool getExitFlagStatus();
+        bool getLoseFlagStatus();
+        void setExitFalse();
         void setExitTrue();
+        void setLoseFalse();
+        void setLoseTrue();
 
         char getInput();
         void setInput(char this_input);
@@ -38,6 +44,9 @@ class GameMechs
 
         int getBoardSizeX();
         int getBoardSizeY();
+
+        int getScore();
+        void incrementScore();
       
 
 };
