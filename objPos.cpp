@@ -39,7 +39,7 @@ void objPos::setObjPos(int xPos, int yPos, char sym)
     symbol = sym;
 }
 
-//Gets the data memebers of the object we are currently in
+//Gets the data members of the object we are currently in
 void objPos::getObjPos(objPos &returnPos)
 {
     returnPos.setObjPos(x, y, symbol);

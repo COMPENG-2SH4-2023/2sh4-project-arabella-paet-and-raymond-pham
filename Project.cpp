@@ -1,6 +1,7 @@
 #include <iostream>
 #include "MacUILib.h"
 #include "objPos.h"
+
 #include "Player.h"
 #include "GameMechs.h"
 #include "Food.h"
@@ -12,6 +13,7 @@ using namespace std;
 GameMechs *ptrGameMechs;
 Food *ptrFood;
 objPos player;
+Player *ptrPlayer;
 
 void Initialize(void);
 void GetInput(void);
@@ -49,9 +51,11 @@ void Initialize(void)
     ptrFood = new Food();
 
 
-    player.setObjPos(1, 1, '*');
+    // player.setObjPos(1, 1, '*');
 
     ptrGameMechs->setExitFalse();
+
+    ptrPlayer = new Player(ptrGameMechs);
 }
 
 void GetInput(void)
@@ -86,7 +90,11 @@ void RunLogic(void)
             default:
                 break;
         }
+
+        ptrPlayer->updatePlayerDir();
+
     }
+    ptrPlayer->movePlayer();
 
     ptrGameMechs->clearInput();
     
@@ -98,6 +106,9 @@ void DrawScreen(void)
     objPos board;
     objPos foodPos;
     ptrFood->getFoodPos(foodPos);   //copying the food object as an objPos object
+    objPos player;
+    ptrPlayer->getPlayerPos(player);
+
     int x, y;
 
     for(y = 0; y < ptrGameMechs->getBoardSizeY(); y++)
@@ -113,6 +124,10 @@ void DrawScreen(void)
             else if(foodPos.isPosEqual(&board))                   //if the food has the same coordinates as the current board object 
             {
                 cout << foodPos.getSymbolIfPosEqual(&board);      //if yes, print the food
+            }
+            else if (player.isPosEqual(&board))
+            {
+                cout << player.getSymbolIfPosEqual(&board);
             }
             else
             {
@@ -153,6 +168,7 @@ void CleanUp(void)
 
     delete ptrGameMechs;
     //delete ptrFood;
+    delete ptrPlayer;
   
     MacUILib_uninit();
 }

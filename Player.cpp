@@ -1,5 +1,8 @@
 #include "Player.h"
 
+//for debugging messages
+#include <iostream>
+using namespace std;
 
 Player::Player(GameMechs* thisGMRef)
 {
@@ -7,108 +10,118 @@ Player::Player(GameMechs* thisGMRef)
     myDir = STOP;
 
     // more actions to be included
-    playerPos.x = 10;
-    playerPos.y = 4;
-    playerPos.symbol = '#';
+    playerPos.setObjPos((mainGameMechsRef->getBoardSizeX())/2, (mainGameMechsRef->getBoardSizeY())/2, '*');
 
-    enum Dir move;
-
-    // Border Wraparound
-    if (player.y <= 0)
-    {
-        playerPos.y = (*thisGMRef.getBoardSizeY)-2;
-    }
-    else if (playerPos.y >= (*thisGMRef.getBoardSizeY)-1)
-    {
-        playerPos.y = 1;
-    }
-    
-    if (playerPos.x >= (*thisGMRef.getBoardSizeX)-1)
-    {
-        playerPos.x = 1;
-    }
-    else if (playerPos.x <= 0)
-    {
-        playerPos.x = (*thisGMRef.getBoardSizeX)-2;
-    }
 }
 
 
 Player::~Player()
 {
     // delete any heap members here
+    // nothing to delete yet
+    //will be implemented in iteration 3
 }
 
 void Player::getPlayerPos(objPos &returnPos)
 {
     // return the reference to the playerPos arrray list
+    returnPos.setObjPos(playerPos.x, playerPos.y, playerPos.symbol);
 }
 
 void Player::updatePlayerDir()
 {
     // PPA3 input processing logic
     // FSM
-    switch(input)
+    
+    switch(mainGameMechsRef->getInput())
     {
         case 'w':
-            if (move == DOWN){
+            if (myDir == DOWN){
                 break;
             }
             else {
-                move = UP;
+                myDir = UP;
                 break;
             }
 
         case 'a': 
-            if (move == RIGHT){
+            if (myDir == RIGHT){
                 break;
             }
             else {
-                move = LEFT;
+                myDir = LEFT;
                 break;
             }              
 
         case 's':
-            if (move == UP){
+            if (myDir == UP){
                 break;
             }
             else {
-                move = DOWN;
+                myDir = DOWN;
                 break;
             }
 
         case 'd':
-            if (move == LEFT){
+            if (myDir == LEFT){
                 break;
             }
             else {
-                move = RIGHT;
+                myDir = RIGHT;
                 break;
             }
+        default:
+            myDir = STOP;
+            break;
     }
-    input = 0;        
+    // cout << "Input: " << mainGameMechsRef->getInput() << endl;
+    // cout << "Dir: " << myDir << endl;
+
 }
 
 void Player::movePlayer()
 {
     // PPA3 Finite State Machine logic
-    // Isn't FSM supposed to be in updatePlayerDir
-    switch(move)
+    // THis^ is the comment under this method but Isn't FSM supposed to be in updatePlayerDir
+
+
+    switch(myDir)
     {
         case UP:
-            player.y -= 1;
+            playerPos.y -= 1;
             break;
         case DOWN:
-            player.y += 1;
+            playerPos.y += 1;
             break;
         case LEFT:
-            player.x -= 1;
+            playerPos.x -= 1;
             break;
         case RIGHT:
-            player.x += 1;
+            playerPos.x += 1;
             break;
         default:
             break;
     }
+
+    // Border Wraparound
+    if (playerPos.y <= 0)
+    {
+        playerPos.y = (mainGameMechsRef->getBoardSizeY())-2;
+    }
+    else if (playerPos.y >= (mainGameMechsRef->getBoardSizeY())-1)
+    {
+        playerPos.y = 1;
+    }
+    
+    if (playerPos.x >= (mainGameMechsRef->getBoardSizeX())-1)
+    {
+        playerPos.x = 1;
+    }
+    else if (playerPos.x <= 0)
+    {
+        playerPos.x = (mainGameMechsRef->getBoardSizeX())-2;
+    }
+
+    playerPos.setObjPos(playerPos.x, playerPos.y, playerPos.symbol);
 }
 
