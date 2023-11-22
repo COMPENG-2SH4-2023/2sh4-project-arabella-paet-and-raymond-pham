@@ -9,7 +9,6 @@
 
 using namespace std;
 
-
 class GameMechs
 {
     // Construct the remaining declaration from the project manual.
