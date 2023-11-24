@@ -12,7 +12,6 @@ using namespace std;
 
 GameMechs *ptrGameMechs;
 Food *ptrFood;
-objPos player;
 Player *ptrPlayer;
 
 void Initialize(void);
@@ -48,22 +47,19 @@ void Initialize(void)
     MacUILib_clearScreen();
 
     ptrGameMechs = new GameMechs();
-    ptrFood = new Food();
+    ptrFood = new Food(ptrGameMechs);
+    ptrPlayer = new Player(ptrGameMechs);
 
-
-    // player.setObjPos(1, 1, '*');
 
     ptrGameMechs->setExitFalse();
 
-    ptrPlayer = new Player(ptrGameMechs);
+    objPos tempPos(-1, -1, '0');
+    ptrFood->generateFood(tempPos);
 }
 
 void GetInput(void)
 {
-    if (MacUILib_hasChar())
-    {
-        ptrGameMechs->setInput(MacUILib_getChar());
-    }
+    ptrGameMechs->getInput();
 }
 
 void RunLogic(void)
@@ -72,7 +68,7 @@ void RunLogic(void)
     {
         switch(ptrGameMechs->getInput())
         {                      
-            case 27:  // exit
+            case 27:  // exit (escape key)
                 ptrGameMechs->setExitTrue();
                 break;
             // case '1':
@@ -84,18 +80,17 @@ void RunLogic(void)
             // case '3':
             //     ptrGameMechs->setLoseFalse();
             //     break;
-            case 'p':
-                ptrFood->generateFood(player, ptrGameMechs);
-                break;
+            // case 'p':
+            //     ptrFood->generateFood(player, ptrGameMechs);
+            //     break;
             default:
                 break;
         }
-
         ptrPlayer->updatePlayerDir();
 
     }
-    ptrPlayer->movePlayer();
 
+    ptrPlayer->movePlayer();
     ptrGameMechs->clearInput();
     
 }
@@ -104,8 +99,10 @@ void DrawScreen(void)
 {
     MacUILib_clearScreen(); 
     objPos board;
+    
     objPos foodPos;
     ptrFood->getFoodPos(foodPos);   //copying the food object as an objPos object
+    
     objPos player;
     ptrPlayer->getPlayerPos(player);
 
@@ -136,6 +133,8 @@ void DrawScreen(void)
         }
         cout << endl;
     }
+
+    cout << "Score: " << ptrGameMechs->getScore();
 
     /*Degbugging prints for the score and winning/losing messages
 
@@ -169,6 +168,8 @@ void CleanUp(void)
     delete ptrGameMechs;
     //delete ptrFood;
     delete ptrPlayer;
+
+    delete ptrFood;
   
     MacUILib_uninit();
 }

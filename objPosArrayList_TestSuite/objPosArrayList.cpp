@@ -34,6 +34,7 @@ void objPosArrayList::insertHead(objPos thisPos)
     if (listSize == arrayCapacity)
     {
         cout << "Array List is full." << endl;
+        throw string("Array List is full.");    //added throw for if we are adding more objects than the specified array size
     }
 
     // Move over elements +1 pos towards tail
@@ -50,6 +51,7 @@ void objPosArrayList::insertTail(objPos thisPos)
     if (listSize == arrayCapacity)
     {
         cout << "Array List is full." << endl;
+        throw string("Array List is full.");      //throwing an error if the size of the list has reached max capacity
     }
     aList[listSize] = thisPos;
     listSize++;
@@ -82,5 +84,10 @@ void objPosArrayList::getTailElement(objPos &returnPos)
 
 void objPosArrayList::getElement(objPos &returnPos, int index)
 {
+    if(index > listSize)
+    {
+        cout << "Invalid Index." << endl;
+        throw string("Invalid Index.");    //throwing error if give index is greater than the list size
+    }
     returnPos.setObjPos(aList[index]);
 }

@@ -1,6 +1,10 @@
 <testsuites>
-	<testsuite name="AllTests" tests="9">
-		<testcase classname="AllTests" name="testConstructor"/>
+	<testsuite name="AllTests" tests="12">
+		<testcase classname="AllTests" name="testConstructor">
+			<error message="testConstructor Invalid Index." type="unexpected exception">
+Invalid Index.
+			</error>
+		</testcase>
 		<testcase classname="AllTests" name="testInsertHead_1Element"/>
 		<testcase classname="AllTests" name="testInsertHead_5Element"/>
 		<testcase classname="AllTests" name="testInsertTail_1Element"/>
@@ -9,5 +13,8 @@
 		<testcase classname="AllTests" name="testRemoveHead_5Element"/>
 		<testcase classname="AllTests" name="testRemoveTail_1Element"/>
 		<testcase classname="AllTests" name="testRemoveTail_5Element"/>
+		<testcase classname="AllTests" name="testInsertHead_MaxElement_Additional"/>
+		<testcase classname="AllTests" name="testInsertTail_MaxElement_Additional"/>
+		<testcase classname="AllTests" name="testGetElementInvalid"/>
 	</testsuite>
 </testsuites>

@@ -14,15 +14,16 @@ class Food
 {
     private:
         objPos foodPos;
+        GameMechs* mainGameMechsRef;
 
     public:
         //Constructor
-        Food();
+        Food(GameMechs* thisGMRef);
 
         //Deconstructor
         ~Food();
 
-        void generateFood(objPos blockOff, GameMechs* board);
+        void generateFood(objPos blockOff);
         void getFoodPos(objPos &returnPos);
 };
 

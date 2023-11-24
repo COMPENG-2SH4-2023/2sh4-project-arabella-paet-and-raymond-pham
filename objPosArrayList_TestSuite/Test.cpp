@@ -6,6 +6,8 @@
 #include "objPosArrayList.h"
 #include <iostream>
 
+using namespace std;
+
 // WARNING!!  This test suite does not contain any test cases for accessing elements out-of-bound.
 //
 // You must deploy exception throwing for all out-of-bound accesses.
@@ -37,7 +39,6 @@ void testConstructor()
 
 	// The destructor will be called automatically for stack-allocated objects
 }
-
 
 // Test Case 2a - insertHead 1 Element 
 // - Will require you to implement getHeadElement(), getTailElement(), and getElement() methods.
@@ -131,8 +132,6 @@ void testInsertHead_5Element()
 
 	// The destructor will be called automatically for stack-allocated objects
 }
-
-
 
 // Test Case 3a - insertTail 1 Element 
 void testInsertTail_1Element()
@@ -353,6 +352,88 @@ void testRemoveTail_5Element()
 	// The destructor will be called automatically for stack-allocated objects
 }
 
+void testInsertHead_MaxElement_Additional()
+{
+	objPos currentPos;
+	objPos bodyPos{2, 5, 'a'};  
+	objPos headPos{3, 3, 'm'};
+
+	// Insert 4 body elements, then 1 unique head element
+	objPosArrayList thisList;
+	string actual = "Array List is NOT full.";
+	for(int i = 0; i < 200; i ++)
+	{
+		thisList.insertHead(bodyPos);
+	}
+	try
+	{
+		thisList.insertHead(headPos);
+	}
+	catch(string e)
+	{
+		actual = e;
+	}
+
+	string expected = "Array List is full.";
+	ASSERT_EQUAL(expected, actual);
+}
+
+void testInsertTail_MaxElement_Additional()
+{
+	objPos currentPos;
+	objPos bodyPos{2, 5, 'a'};  
+	objPos headPos{3, 3, 'm'};
+
+	// Insert 4 body elements, then 1 unique head element
+	objPosArrayList thisList;
+	string actual = "Array List is NOT full.";
+	for(int i = 0; i < 200; i ++)
+	{
+		thisList.insertHead(bodyPos);
+	}
+	try
+	{
+		thisList.insertTail(headPos);
+	}
+	catch(string e)
+	{
+		actual = e;
+	}
+
+	string expected = "Array List is full.";
+	ASSERT_EQUAL(expected, actual);
+}
+
+void testGetElementInvalid()
+{
+	objPos currentPos;
+	objPos tailPos{4, 4, 'r'};
+	objPos bodyPos{2, 5, 'a'};  
+	objPos headPos{3, 3, 'm'};
+
+	// Insert 4 body elements, then 1 unique head element
+	objPosArrayList thisList;
+	thisList.insertTail(bodyPos);
+	thisList.insertTail(bodyPos);
+	thisList.insertTail(bodyPos);
+	thisList.insertTail(bodyPos);
+	thisList.insertTail(tailPos);
+	thisList.insertHead(headPos);
+
+	string actual = "Valid Index";
+	try
+	{
+		thisList.getElement(currentPos, 15);
+	}
+	catch(string e)
+	{
+		actual = e;
+	}
+
+	string expected = "Invalid Index.";
+	ASSERT_EQUAL(expected, actual);
+}
+
 
 
 
@@ -368,6 +449,10 @@ bool runAllTests(int argc, char const *argv[]) {
 	s.push_back(CUTE(testRemoveHead_5Element));
 	s.push_back(CUTE(testRemoveTail_1Element));
 	s.push_back(CUTE(testRemoveTail_5Element));
+
+	s.push_back(CUTE(testInsertHead_MaxElement_Additional));
+	s.push_back(CUTE(testInsertTail_MaxElement_Additional));
+	s.push_back(CUTE(testGetElementInvalid));
 	
 
 
