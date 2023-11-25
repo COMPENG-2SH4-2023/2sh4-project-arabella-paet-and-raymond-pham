@@ -10,7 +10,26 @@ Player::Player(GameMechs* thisGMRef)
     myDir = STOP;
 
     // more actions to be included
-    playerPos.setObjPos((mainGameMechsRef->getBoardSizeX())/2, (mainGameMechsRef->getBoardSizeY())/2, '*');
+    //playerPos.setObjPos((mainGameMechsRef->getBoardSizeX())/2, (mainGameMechsRef->getBoardSizeY())/2, '*');
+
+    objPos tempPos;
+    tempPos.setObjPos((mainGameMechsRef->getBoardSizeX())/2, (mainGameMechsRef->getBoardSizeY())/2, '*');
+
+    playerPosList = new objPosArrayList();
+
+    //Snake with 1 Element
+    //playerPosList->insertHead(tempPos);
+
+    //Snake with 3 Elements
+    // playerPosList->insertHead(tempPos);
+    // playerPosList->insertHead(tempPos);
+
+    //Snake with 5 Elements
+    // playerPosList->insertHead(tempPos);
+    // playerPosList->insertHead(tempPos);
+    // playerPosList->insertHead(tempPos);
+    // playerPosList->insertHead(tempPos);
+    // playerPosList->insertHead(tempPos);
 
 }
 
@@ -20,13 +39,21 @@ Player::~Player()
     // delete any heap members here
     // nothing to delete yet
     //will be implemented in iteration 3
+    delete playerPosList;
 }
 
-void Player::getPlayerPos(objPos &returnPos)
+// void Player::getPlayerPos(objPos &returnPos)
+// {
+//     // return the reference to the playerPos arrray list
+//     returnPos.setObjPos(playerPos.x, playerPos.y, playerPos.symbol);
+// }
+
+objPosArrayList* Player::getPlayerPos()
 {
-    // return the reference to the playerPos arrray list
-    returnPos.setObjPos(playerPos.x, playerPos.y, playerPos.symbol);
+    return playerPosList;
 }
+
+
 
 void Player::updatePlayerDir()
 {
@@ -87,44 +114,47 @@ void Player::movePlayer()
     // PPA3 Finite State Machine logic
     // THis^ is the comment under this method but Isn't FSM supposed to be in updatePlayerDir
 
+    objPos currentHead;
+    playerPosList->getHeadElement(currentHead);
 
     switch(myDir)
     {
         case UP:
-            playerPos.y -= 1;
+            currentHead.y -= 1;
             break;
         case DOWN:
-            playerPos.y += 1;
+            currentHead.y += 1;
             break;
         case LEFT:
-            playerPos.x -= 1;
+            currentHead.x -= 1;
             break;
         case RIGHT:
-            playerPos.x += 1;
+            currentHead.x += 1;
             break;
         default:
             break;
     }
 
     // Border Wraparound
-    if (playerPos.y <= 0)
+    if (currentHead.y <= 0)
     {
-        playerPos.y = (mainGameMechsRef->getBoardSizeY())-2;
+        currentHead.y = (mainGameMechsRef->getBoardSizeY())-2;
     }
-    else if (playerPos.y >= (mainGameMechsRef->getBoardSizeY())-1)
+    else if (currentHead.y >= (mainGameMechsRef->getBoardSizeY())-1)
     {
-        playerPos.y = 1;
+        currentHead.y = 1;
     }
     
-    if (playerPos.x >= (mainGameMechsRef->getBoardSizeX())-1)
+    if (currentHead.x >= (mainGameMechsRef->getBoardSizeX())-1)
     {
-        playerPos.x = 1;
+        currentHead.x = 1;
     }
-    else if (playerPos.x <= 0)
+    else if (currentHead.x <= 0)
     {
-        playerPos.x = (mainGameMechsRef->getBoardSizeX())-2;
+        currentHead.x = (mainGameMechsRef->getBoardSizeX())-2;
     }
 
-    playerPos.setObjPos(playerPos.x, playerPos.y, playerPos.symbol);
+    playerPosList->insertHead(currentHead);    //after moving the current head based on the user input, insert the current head object as the NEW head of the snake
+    playerPosList->removeTail();               //then the tail of the snake since it has been moved 
 }
 

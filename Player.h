@@ -19,12 +19,18 @@ class Player
         Player(GameMechs* thisGMRef); 
         ~Player();
 
-        void getPlayerPos(objPos &returnPos); // Upgrade this in iteration 3.
+        objPosArrayList* getPlayerPos(); // Upgrade this in iteration 3.
         void updatePlayerDir();
+
         void movePlayer();
+        /*
+        -needs to check if the head positions hits a food before removing the tail
+        -generate new food after eating the food
+        */
+
 
     private:
-        objPos playerPos;   // Upgrade this in iteration 3.       
+        objPosArrayList* playerPosList;   // Upgrade this in iteration 3.       
         enum Dir myDir;
 
         // Need a reference to the Main Game Mechanisms

@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "GameMechs.h"
 #include "Food.h"
+#include "objPosArrayList.h"
 
 using namespace std;
 
@@ -76,29 +77,52 @@ void DrawScreen(void)
     objPos foodPos;
     ptrFood->getFoodPos(foodPos);   //copying the food object as an objPos object
     
-    objPos player;
-    ptrPlayer->getPlayerPos(player);
+    // objPos player;
+    // ptrPlayer->getPlayerPos(player);
 
-    int x, y;
+    objPosArrayList* playerBody;
+    playerBody = ptrPlayer->getPlayerPos(); //gets the reference for the entire snake body (the array list)
+    objPos tempBody;
+
+    bool draw_body;
+
+    int x, y, i;
 
     for(y = 0; y < ptrGameMechs->getBoardSizeY(); y++)
     {
         for(x = 0; x < ptrGameMechs->getBoardSizeX(); x++)
         {
             board.setObjPos(x, y, ' ');
+            draw_body = false;
+            //iterate through each element in the list (the snakes body)
+            for(i = 0; i < playerBody->getSize(); i++)
+            {
+                playerBody->getElement(tempBody, i); //gets the information for each section of the snakes body
+                if(tempBody.isPosEqual(&board))
+                {
+                    cout << tempBody.getSymbol();    //if the current body element has the same coordinates of the current board coordinates, print that body element
+                    draw_body = true;
+                    break;
+                }
+            }
+
+            //If an element of the snakes body has been printed onto the board, skip the rest of the actions below and go to the next coordinate of the board
+            if(draw_body == true)
+            {
+                continue;
+            }
+
             if(board.y == 0 || board.y == ptrGameMechs->getBoardSizeY() - 1 || board.x == 0 || board.x == ptrGameMechs->getBoardSizeX() - 1)            
             {    
                 board.setObjPos(x, y, '#');                                                                                              
                 cout << board.getSymbol();
             }
+
             else if(foodPos.isPosEqual(&board))                   //if the food has the same coordinates as the current board object, print thr food object
             {
-                cout << foodPos.getSymbolIfPosEqual(&board);      
+                cout << foodPos.getSymbol();      
             }
-            else if (player.isPosEqual(&board))                   //if the player object has the same coordinates as the current board object, print the player object
-            {
-                cout << player.getSymbolIfPosEqual(&board);
-            }
+
             else
             {
                 cout << board.getSymbol();
@@ -106,10 +130,14 @@ void DrawScreen(void)
         }
         cout << endl;
     }
-
     cout << "Score: " << ptrGameMechs->getScore() << endl;
-    cout << "Player Position: (" << player.x << ", " << player.y << ")" << endl;
     cout << "Food Position: (" << foodPos.x << ", " << foodPos.y << ")" << endl;
+    cout << "Snake Body Positions: " << endl;
+    for(i = 0; i < playerBody->getSize(); i++)
+    {
+        playerBody->getElement(tempBody, i);
+        cout << "Snake[" << i + 1 << "]: (" << tempBody.x << ", " << tempBody.y << ")" << endl;
+    }
 
     /*Degbugging prints for the score and winning/losing messages
 
