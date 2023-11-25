@@ -33,46 +33,49 @@ void Player::updatePlayerDir()
     // PPA3 input processing logic
     // FSM
     
-    switch(mainGameMechsRef->getInput())
+    if(mainGameMechsRef->getInput() != 0)  // if not null character
     {
-        case 'w':
-            if (myDir == DOWN){
-                break;
-            }
-            else {
-                myDir = UP;
-                break;
-            }
+        switch(mainGameMechsRef->getInput())
+        {
+            case 'w':
+                if (myDir == DOWN){
+                    break;
+                }
+                else {
+                    myDir = UP;
+                    break;
+                }
 
-        case 'a': 
-            if (myDir == RIGHT){
-                break;
-            }
-            else {
-                myDir = LEFT;
-                break;
-            }              
+            case 'a': 
+                if (myDir == RIGHT){
+                    break;
+                }
+                else {
+                    myDir = LEFT;
+                    break;
+                }              
 
-        case 's':
-            if (myDir == UP){
-                break;
-            }
-            else {
-                myDir = DOWN;
-                break;
-            }
+            case 's':
+                if (myDir == UP){
+                    break;
+                }
+                else {
+                    myDir = DOWN;
+                    break;
+                }
 
-        case 'd':
-            if (myDir == LEFT){
+            case 'd':
+                if (myDir == LEFT){
+                    break;
+                }
+                else {
+                    myDir = RIGHT;
+                    break;
+                }
+            default:
+                myDir = STOP;
                 break;
-            }
-            else {
-                myDir = RIGHT;
-                break;
-            }
-        default:
-            myDir = STOP;
-            break;
+        }
     }
     // cout << "Input: " << mainGameMechsRef->getInput() << endl;
     // cout << "Dir: " << myDir << endl;

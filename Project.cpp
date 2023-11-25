@@ -45,13 +45,10 @@ void Initialize(void)
 {
     MacUILib_init();
     MacUILib_clearScreen();
-
-    ptrGameMechs = new GameMechs();
+ 
+    ptrGameMechs = new GameMechs();      //Default Game Board Size [30x15]
     ptrFood = new Food(ptrGameMechs);
     ptrPlayer = new Player(ptrGameMechs);
-
-
-    ptrGameMechs->setExitFalse();
 
     objPos tempPos(-1, -1, '0');
     ptrFood->generateFood(tempPos);
@@ -64,33 +61,9 @@ void GetInput(void)
 
 void RunLogic(void)
 {
-    if(ptrGameMechs->getInput() != 0)  // if not null character
-    {
-        switch(ptrGameMechs->getInput())
-        {                      
-            case 27:  // exit (escape key)
-                ptrGameMechs->setExitTrue();
-                break;
-            // case '1':
-            //     ptrGameMechs->incrementScore();    //testing incrementScore() method
-            //     break;
-            // case '2':
-            //     ptrGameMechs->setLoseTrue();
-            //     break;
-            // case '3':
-            //     ptrGameMechs->setLoseFalse();
-            //     break;
-            // case 'p':
-            //     ptrFood->generateFood(player, ptrGameMechs);
-            //     break;
-            default:
-                break;
-        }
-        ptrPlayer->updatePlayerDir();
-
-    }
-
-    ptrPlayer->movePlayer();
+    ptrPlayer->updatePlayerDir();        //takes input from user for the player objects direction
+    ptrPlayer->movePlayer();             //move player object and head wraparound logic
+    
     ptrGameMechs->clearInput();
     
 }
@@ -118,11 +91,11 @@ void DrawScreen(void)
                 board.setObjPos(x, y, '#');                                                                                              
                 cout << board.getSymbol();
             }
-            else if(foodPos.isPosEqual(&board))                   //if the food has the same coordinates as the current board object 
+            else if(foodPos.isPosEqual(&board))                   //if the food has the same coordinates as the current board object, print thr food object
             {
-                cout << foodPos.getSymbolIfPosEqual(&board);      //if yes, print the food
+                cout << foodPos.getSymbolIfPosEqual(&board);      
             }
-            else if (player.isPosEqual(&board))
+            else if (player.isPosEqual(&board))                   //if the player object has the same coordinates as the current board object, print the player object
             {
                 cout << player.getSymbolIfPosEqual(&board);
             }
@@ -134,7 +107,9 @@ void DrawScreen(void)
         cout << endl;
     }
 
-    cout << "Score: " << ptrGameMechs->getScore();
+    cout << "Score: " << ptrGameMechs->getScore() << endl;
+    cout << "Player Position: (" << player.x << ", " << player.y << ")" << endl;
+    cout << "Food Position: (" << foodPos.x << ", " << foodPos.y << ")" << endl;
 
     /*Degbugging prints for the score and winning/losing messages
 
