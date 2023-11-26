@@ -8,8 +8,6 @@
 #include "objPosArrayList.h"
 #include "GameMechs.h"
 
-using namespace std;
-
 class Food
 {
     private:
@@ -23,7 +21,7 @@ class Food
         //Deconstructor
         ~Food();
 
-        void generateFood(objPos blockOff);
+        void generateFood(objPosArrayList* blockOff);
         void getFoodPos(objPos &returnPos);
 };
 

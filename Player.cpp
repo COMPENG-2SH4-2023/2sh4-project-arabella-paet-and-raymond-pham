@@ -4,53 +4,53 @@
 #include <iostream>
 using namespace std;
 
-Player::Player(GameMechs* thisGMRef)
+Player::Player(GameMechs* thisGMRef, Food* thisFoodRef)
 {
     mainGameMechsRef = thisGMRef;
+    foodRef = thisFoodRef;
     myDir = STOP;
 
-    // more actions to be included
-    //playerPos.setObjPos((mainGameMechsRef->getBoardSizeX())/2, (mainGameMechsRef->getBoardSizeY())/2, '*');
-
-    objPos tempPos;
-    tempPos.setObjPos((mainGameMechsRef->getBoardSizeX())/2, (mainGameMechsRef->getBoardSizeY())/2, '*');
+    objPos startPos;
+    startPos.setObjPos((mainGameMechsRef->getBoardSizeX())/2, (mainGameMechsRef->getBoardSizeY())/2, '*');
 
     playerPosList = new objPosArrayList();
 
-    //Snake with 1 Element
-    //playerPosList->insertHead(tempPos);
-
-    //Snake with 3 Elements
-    // playerPosList->insertHead(tempPos);
-    // playerPosList->insertHead(tempPos);
-
-    //Snake with 5 Elements
-    // playerPosList->insertHead(tempPos);
-    // playerPosList->insertHead(tempPos);
-    // playerPosList->insertHead(tempPos);
-    // playerPosList->insertHead(tempPos);
-    // playerPosList->insertHead(tempPos);
-
+    playerPosList->insertHead(startPos);
+    foodRef->generateFood(playerPosList);
 }
 
 
 Player::~Player()
 {
-    // delete any heap members here
-    // nothing to delete yet
-    //will be implemented in iteration 3
     delete playerPosList;
 }
-
-// void Player::getPlayerPos(objPos &returnPos)
-// {
-//     // return the reference to the playerPos arrray list
-//     returnPos.setObjPos(playerPos.x, playerPos.y, playerPos.symbol);
-// }
 
 objPosArrayList* Player::getPlayerPos()
 {
     return playerPosList;
+}
+
+bool Player::checkFoodConsumption(objPos newHead)
+{
+    objPos foodPos;
+    foodRef->getFoodPos(foodPos);
+
+    return newHead.isPosEqual(&foodPos);            //return true if the new head position collides with a food item
+
+}
+
+void Player::increasePlayerLength(objPos newHead)
+{
+    playerPosList->insertHead(newHead);            //inserts the new head position
+    if(checkFoodConsumption(newHead) == true)  //checking if the new head position hit food
+    {
+        foodRef->generateFood(playerPosList);      //generates new food location after collision
+        mainGameMechsRef->incrementScore();        //increment game score
+    }
+    else
+    {   
+        playerPosList->removeTail();               //if no collison occure, remove the tail of the snake(which is the old tail position)
+    }
 }
 
 
@@ -154,7 +154,6 @@ void Player::movePlayer()
         currentHead.x = (mainGameMechsRef->getBoardSizeX())-2;
     }
 
-    playerPosList->insertHead(currentHead);    //after moving the current head based on the user input, insert the current head object as the NEW head of the snake
-    playerPosList->removeTail();               //then the tail of the snake since it has been moved 
+    increasePlayerLength(currentHead);             //after moving the current head based on the user input, insert the current head object as the NEW head of the snake
 }
 

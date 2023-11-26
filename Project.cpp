@@ -49,10 +49,7 @@ void Initialize(void)
  
     ptrGameMechs = new GameMechs();      //Default Game Board Size [30x15]
     ptrFood = new Food(ptrGameMechs);
-    ptrPlayer = new Player(ptrGameMechs);
-
-    objPos tempPos(-1, -1, '0');
-    ptrFood->generateFood(tempPos);
+    ptrPlayer = new Player(ptrGameMechs, ptrFood);
 }
 
 void GetInput(void)
@@ -75,10 +72,7 @@ void DrawScreen(void)
     objPos board;
     
     objPos foodPos;
-    ptrFood->getFoodPos(foodPos);   //copying the food object as an objPos object
-    
-    // objPos player;
-    // ptrPlayer->getPlayerPos(player);
+    ptrFood->getFoodPos(foodPos);           //copying the food object as an objPos object
 
     objPosArrayList* playerBody;
     playerBody = ptrPlayer->getPlayerPos(); //gets the reference for the entire snake body (the array list)
@@ -86,18 +80,19 @@ void DrawScreen(void)
 
     bool draw_body;
 
-    int x, y, i;
+    int bodyIndex, column, row;
 
-    for(y = 0; y < ptrGameMechs->getBoardSizeY(); y++)
+    for(row = 0; row < ptrGameMechs->getBoardSizeY(); row++)
     {
-        for(x = 0; x < ptrGameMechs->getBoardSizeX(); x++)
+        for(column = 0; column < ptrGameMechs->getBoardSizeX(); column++)
         {
-            board.setObjPos(x, y, ' ');
+            board.setObjPos(column, row, ' ');
             draw_body = false;
+
             //iterate through each element in the list (the snakes body)
-            for(i = 0; i < playerBody->getSize(); i++)
+            for(bodyIndex = 0; bodyIndex < playerBody->getSize(); bodyIndex++)
             {
-                playerBody->getElement(tempBody, i); //gets the information for each section of the snakes body
+                playerBody->getElement(tempBody, bodyIndex); //gets the information for each section of the snakes body
                 if(tempBody.isPosEqual(&board))
                 {
                     cout << tempBody.getSymbol();    //if the current body element has the same coordinates of the current board coordinates, print that body element
@@ -114,7 +109,7 @@ void DrawScreen(void)
 
             if(board.y == 0 || board.y == ptrGameMechs->getBoardSizeY() - 1 || board.x == 0 || board.x == ptrGameMechs->getBoardSizeX() - 1)            
             {    
-                board.setObjPos(x, y, '#');                                                                                              
+                board.setObjPos(column, row, '#');                                                                                              
                 cout << board.getSymbol();
             }
 
@@ -131,9 +126,10 @@ void DrawScreen(void)
         cout << endl;
     }
     cout << "Score: " << ptrGameMechs->getScore() << endl;
+    cout << "List Size: " << playerBody->getSize() << endl;
     cout << "Food Position: (" << foodPos.x << ", " << foodPos.y << ")" << endl;
     cout << "Snake Body Positions: " << endl;
-    for(i = 0; i < playerBody->getSize(); i++)
+    for(int i = 0; i < playerBody->getSize(); i++)
     {
         playerBody->getElement(tempBody, i);
         cout << "Snake[" << i + 1 << "]: (" << tempBody.x << ", " << tempBody.y << ")" << endl;
