@@ -50,6 +50,9 @@ void Initialize(void)
     ptrGameMechs = new GameMechs();      //Default Game Board Size [30x15]
     ptrFood = new Food(ptrGameMechs);
     ptrPlayer = new Player(ptrGameMechs, ptrFood);
+
+    objPosArrayList* playerBody = ptrPlayer->getPlayerPos();
+    ptrFood->generateFood(playerBody);
 }
 
 void GetInput(void)

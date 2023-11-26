@@ -13,6 +13,7 @@ Food::Food(GameMechs* thisGMRef)
 
 Food::~Food()
 {
+    //nothing created on heap through food class
 }
 
 void Food::generateFood(objPosArrayList* blockOff)
