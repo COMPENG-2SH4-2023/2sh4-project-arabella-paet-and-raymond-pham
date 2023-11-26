@@ -6,6 +6,7 @@ using namespace std;
 
 Player::Player(GameMechs* thisGMRef, Food* thisFoodRef)
 {
+    playerPosList = new objPosArrayList();
     mainGameMechsRef = thisGMRef;
     foodRef = thisFoodRef;
     myDir = STOP;
@@ -13,10 +14,8 @@ Player::Player(GameMechs* thisGMRef, Food* thisFoodRef)
     objPos startPos;
     startPos.setObjPos((mainGameMechsRef->getBoardSizeX())/2, (mainGameMechsRef->getBoardSizeY())/2, '*');
 
-    playerPosList = new objPosArrayList();
-
     playerPosList->insertHead(startPos);
-    foodRef->generateFood(playerPosList);
+    // foodRef->generateFood(playerPosList);
 }
 
 
