@@ -25,6 +25,9 @@ class Player
         //increases the size of the list if the snake consumes a food
         void increasePlayerLength(objPos head);
 
+        //check if head overlaps with body
+        bool checkSelfCollision(objPos head);
+
 
     private:
         objPosArrayList* playerPosList;         

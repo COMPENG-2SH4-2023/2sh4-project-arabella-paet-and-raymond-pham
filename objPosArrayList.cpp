@@ -19,8 +19,6 @@ objPosArrayList::objPosArrayList()
 objPosArrayList::~objPosArrayList()
 {
     delete[] aList;
-    cout << "Destructor Called" << endl;
-
 }
 
 int objPosArrayList::getSize()

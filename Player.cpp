@@ -11,7 +11,9 @@ Player::Player(GameMechs* thisGMRef, Food* thisFoodRef)
     myDir = STOP;
 
     objPos startPos;
-    startPos.setObjPos((mainGameMechsRef->getBoardSizeX())/2, (mainGameMechsRef->getBoardSizeY())/2, '*');
+    startPos.setObjPos((mainGameMechsRef->getBoardSizeX())/2,
+                       (mainGameMechsRef->getBoardSizeY())/2,
+                        '*');
 
     playerPosList = new objPosArrayList();
 
@@ -112,10 +114,15 @@ void Player::updatePlayerDir()
 void Player::movePlayer()
 {
     // PPA3 Finite State Machine logic
-    // THis^ is the comment under this method but Isn't FSM supposed to be in updatePlayerDir
 
     objPos currentHead;
     playerPosList->getHeadElement(currentHead);
+    if ((checkSelfCollision(currentHead) == true))
+    {
+        mainGameMechsRef->setLoseTrue();
+        mainGameMechsRef->setExitTrue();
+    }
+
 
     switch(myDir)
     {
@@ -157,3 +164,20 @@ void Player::movePlayer()
     increasePlayerLength(currentHead);             //after moving the current head based on the user input, insert the current head object as the NEW head of the snake
 }
 
+bool Player::checkSelfCollision(objPos head)
+{
+    // Loop through each list element for the coords of the body
+    // Check if the head coords match with any of the body coords??
+    int bodyIndex;
+    objPos bodyElement;
+    bool isCollision = false;
+    for (bodyIndex = 1; bodyIndex < playerPosList->getSize(); bodyIndex++)
+    {
+        playerPosList->getElement(bodyElement, bodyIndex);
+        if (head.isPosEqual(&bodyElement)) 
+        {
+            isCollision = true;
+        }
+    }
+    return isCollision;
+}

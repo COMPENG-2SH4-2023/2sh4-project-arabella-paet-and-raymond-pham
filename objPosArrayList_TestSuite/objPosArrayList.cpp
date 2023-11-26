@@ -11,16 +11,11 @@ objPosArrayList::objPosArrayList()
     arrayCapacity = ARRAY_MAX_CAP;
     listSize = 0;
     aList = new objPos[ARRAY_MAX_CAP];
-
-    cout << "Default Constructor called." << endl;
-
 }
 
 objPosArrayList::~objPosArrayList()
 {
     delete[] aList;
-    cout << "Destructor Called" << endl;
-
 }
 
 int objPosArrayList::getSize()
