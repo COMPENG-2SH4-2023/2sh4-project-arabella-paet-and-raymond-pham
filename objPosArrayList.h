@@ -29,6 +29,7 @@ class objPosArrayList
         void insertTail(objPos thisPos);
         void removeHead();
         void removeTail();
+        void emptyList();
         
 };
 

@@ -96,10 +96,16 @@ void objPosArrayList::removeHead()
 void objPosArrayList::removeTail()
 {
     //Error Check
-    if(listSize <= 0)
+    if(listSize == 0)
     {
         cout << "List is Empty, No Removal Allowed" << endl;
         return;
     }
     listSize--;  
+}
+
+//Empty the list
+void objPosArrayList::emptyList()
+{
+    listSize = 0;                   //By setting the listSize as 0, elements within the list can get overwritten by new objects that will inserted
 }

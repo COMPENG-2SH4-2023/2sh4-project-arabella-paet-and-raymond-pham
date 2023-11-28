@@ -7,13 +7,16 @@ using namespace std;
 
 Food::Food(GameMechs* thisGMRef)
 {
-    foodPos.setObjPos(-1, -1, 'o');     //intialize the foodPos outside the game board
+    //intialize the foodPos outside the game board
     mainGameMechsRef = thisGMRef;
+    foodBucket = new objPosArrayList();
+
 }
 
 Food::~Food()
 {
-    //nothing created on heap through food class yet
+    delete foodBucket;
+    cout << "destrcutor Called" << endl;
 }
 
 void Food::generateFood(objPosArrayList* blockOff)
@@ -22,35 +25,44 @@ void Food::generateFood(objPosArrayList* blockOff)
 
     int xCandidate = 0;              
     int yCandidate = 0;
-    bool is_pos = false;                                                      //condition for if coordinates have been generated or not
-    objPos bodyElement;
+    int foodCount = 0;
+    int foodIndex;                      
+    bool is_pos;                                                                  //condition for if coordinates have been generated or not
+    objPos foodElement;
 
-    while(is_pos == false)                                                    //checking if the food object has been given a valid random coordinate yet
+    foodBucket->emptyList();                                                      //"Empty the List" so the foodBucket can overwrite the old foor objs with new food objs
+
+    while(foodCount < NUM_FOOD)                                                   //Keep generating coordinates until each food item has a unique coordinate
     {
-        xCandidate = rand() % (mainGameMechsRef->getBoardSizeX() - 2) + 1; 
-        yCandidate = rand() % (mainGameMechsRef->getBoardSizeY() - 2) + 1;
-        objPos tempPos(xCandidate, yCandidate, 'o');                          //created a tempPos object that holds the generated random coordinates 
-
-        for(int bodyIndex = 0; bodyIndex < blockOff->getSize(); bodyIndex++)  //iterating through each element within the snakes body (the list)
+        is_pos = false;
+        while(is_pos == false)                                                    //First check if the randomly generated coordinates are valid (not same coordinates as snake body)
         {
-            blockOff->getElement(bodyElement, bodyIndex);
-            if(tempPos.isPosEqual(&bodyElement) == true)                      //Checking if the coordinates of the randomly generated coordinates are the same as the current body element
+            xCandidate = rand() % (mainGameMechsRef->getBoardSizeX() - 2) + 1; 
+            yCandidate = rand() % (mainGameMechsRef->getBoardSizeY() - 2) + 1;
+            objPos tempPos(xCandidate, yCandidate, 'o');                          //created a tempPos object that holds the generated random coordinates 
+
+            for(foodIndex = 0; foodIndex < blockOff->getSize(); foodIndex++)      //iterating through each element within the snakes body (the list)
             {
-                is_pos = false;                                               //If it is the same, generate new set of coordinates
-                break;
+                blockOff->getElement(foodElement, foodIndex);
+                if(tempPos.isPosEqual(&foodElement) == true)                      //Checking if the coordinates of the randomly generated coordinates are the same as the current body element
+                {
+                    is_pos = false;                                               //If it is the same, generate new set of coordinates
+                    break;
+                }
+                is_pos = true;
             }
-            is_pos = true;
-        }
 
-        if(is_pos == true)                                                    //If it is NOT the same, set it as the coordinates of the food item
-        {
-            foodPos.setObjPos(tempPos);
+            if(is_pos == true)                                                    //If it is NOT the same, set it as the coordinates of the food item
+            {
+                foodBucket->insertTail(tempPos);
+                foodCount++;
+            }
         }
     }
 
 }
 
-void Food::getFoodPos(objPos &returnPos)                                      //returns the food position of the food object
+objPosArrayList* Food::getFoodPos()                                             //returns the food position of the food object
 {
-    returnPos.setObjPos(foodPos);
+    return foodBucket;
 }

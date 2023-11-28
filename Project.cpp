@@ -73,13 +73,14 @@ void DrawScreen(void)
 {
     MacUILib_clearScreen();  
     objPos board;                           //object for each coordinate on the board
-    objPos foodPos;
-    objPos tempBody;
+    objPos tempObj;
     objPosArrayList* playerBody;            
-    bool draw_body;                         //indicator for if an element from the snakes body has been printed or not
-    int bodyIndex, column, row;
+    objPosArrayList* foodBucket;
+    bool drawBody;                         //indicator for if an element from the snakes body has been printed or not
+    bool isFood;
+    int foodIndex, bodyIndex, column, row;
 
-    ptrFood->getFoodPos(foodPos);           //copying the food object as an objPos object
+    foodBucket = ptrFood->getFoodPos();           //copying the food object as an objPos object
     
     playerBody = ptrPlayer->getPlayerPos(); //gets the reference for the entire snake body (the array list)
 
@@ -88,23 +89,41 @@ void DrawScreen(void)
     {
         for(column = 0; column < ptrGameMechs->getBoardSizeX(); column++)
         {
-            board.setObjPos(column, row, ' ');              //Intializing the board obj to the current x and y coordinate, with a space as its symbol
-            draw_body = false;                              
+            board.setObjPos(column, row, ' ');              //Intializing the board obj to the current x and y coordinate, with a space as its symbol                            
+            drawBody = false;  
+            isFood = false;
 
             //iterate through each element in the list (the snakes body)
             for(bodyIndex = 0; bodyIndex < playerBody->getSize(); bodyIndex++)
             {
-                playerBody->getElement(tempBody, bodyIndex); //gets the information for each element of the snakes body
-                if(tempBody.isPosEqual(&board))              //if the current body element has the same coordinates of the current board coordinates, print that body element
+                playerBody->getElement(tempObj, bodyIndex); //gets the information for each element of the snakes body
+                if(tempObj.isPosEqual(&board))              //if the current body element has the same coordinates of the current board coordinates, print that body element
                 {
-                    cout << tempBody.getSymbol();    
-                    draw_body = true;
+                    cout << tempObj.getSymbol();    
+                    drawBody = true;
                     break;
                 }
             }
 
             //If an element of the snakes body has been printed onto the board, skip the rest of the actions below and go to the next coordinate of the board
-            if(draw_body == true)
+            if(drawBody)
+            {
+                continue;
+            }
+
+            //Itereate through each food element inside the list (foodBucket)
+            for(foodIndex = 0; foodIndex < foodBucket->getSize(); foodIndex++)
+            {
+                foodBucket->getElement(tempObj, foodIndex);                        
+                if(tempObj.isPosEqual(&board))
+                {
+                    cout << tempObj.getSymbol();
+                    isFood = true;
+                    break;
+                }
+            }
+
+            if(isFood)
             {
                 continue;
             }
@@ -116,19 +135,22 @@ void DrawScreen(void)
                 cout << board.getSymbol();
             }
 
-            else if(foodPos.isPosEqual(&board))                   //If the food obj has the same coordinates as the current board object, print the food object
-            {
-                cout << foodPos.getSymbol();      
-            }
-
             else                                                  //If neither food or snake element is supposed to printed, just print the space
             {
                 cout << board.getSymbol();
             }
+            
         }
         cout << endl;
     }
     cout << "Score: " << ptrGameMechs->getScore() << endl;
+    //cout << "Size List: " << foodBucket->getSize() << endl;
+    // for(foodIndex = 0; foodIndex < foodBucket->getSize(); foodIndex++)
+    // {
+    //     foodBucket->getElement(tempObj, foodIndex);
+    //     cout << "Food[" << foodIndex << "] (" << tempObj.x << ", " << tempObj.y << ")" << endl;
+    // }
+
 
     if(ptrGameMechs->getLoseFlagStatus() == true)                 //If lose status is true (snake self-collision), print out the lose message and exit game
     {   

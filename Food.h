@@ -8,10 +8,12 @@
 #include "objPosArrayList.h"
 #include "GameMechs.h"
 
+#define NUM_FOOD 3
+
 class Food
 {
     private:
-        objPos foodPos;
+        objPosArrayList* foodBucket;
         GameMechs* mainGameMechsRef;
 
     public:
@@ -22,7 +24,7 @@ class Food
         ~Food();
 
         //Getter
-        void getFoodPos(objPos &returnPos);
+        objPosArrayList* getFoodPos();
 
         void generateFood(objPosArrayList* blockOff);
 };

@@ -140,10 +140,23 @@ void Player::movePlayer()
 //Checking if the snake ate a food obj
 bool Player::checkFoodConsumption(objPos head)
 {
-    objPos foodPos;
-    foodRef->getFoodPos(foodPos);                   //getting the food coordinates
+    int foodIndex;
+    objPos foodElement;
+    objPos tempFood;
+    objPosArrayList* foodBucket;
 
-    return head.isPosEqual(&foodPos);               //return true if the new head position collides with a food item
+    foodBucket = foodRef->getFoodPos();
+
+    for(foodIndex = 0; foodIndex < foodBucket->getSize(); foodIndex++)
+    {
+        foodBucket->getElement(tempFood, foodIndex);
+        if(head.isPosEqual(&tempFood))
+        {
+            return true;
+            break;
+        }
+    }
+    return false;                                
 
 }
 
