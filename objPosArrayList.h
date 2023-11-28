@@ -10,21 +10,26 @@ class objPosArrayList
     private:
         objPos* aList;
         int listSize; 
-        int arrayCapacity; // Array Capacity
+        int arrayCapacity; 
 
     public:
+        //Default Constructor
         objPosArrayList();
+
+        //Destructor
         ~objPosArrayList();
 
+        //Getters
         int getSize();
+        void getHeadElement(objPos &returnPos);
+        void getTailElement(objPos &returnPos);
+        void getElement(objPos &returnPos, int index);
+
         void insertHead(objPos thisPos);
         void insertTail(objPos thisPos);
         void removeHead();
         void removeTail();
         
-        void getHeadElement(objPos &returnPos);
-        void getTailElement(objPos &returnPos);
-        void getElement(objPos &returnPos, int index);
 };
 
 #endif

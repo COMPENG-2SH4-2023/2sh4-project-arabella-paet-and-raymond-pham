@@ -21,8 +21,10 @@ class Food
         //Deconstructor
         ~Food();
 
-        void generateFood(objPosArrayList* blockOff);
+        //Getter
         void getFoodPos(objPos &returnPos);
+
+        void generateFood(objPosArrayList* blockOff);
 };
 
 #endif

@@ -27,14 +27,12 @@ class Player
 
         //check if head overlaps with body
         bool checkSelfCollision(objPos head);
-
-
     private:
-        objPosArrayList* playerPosList;         
-        enum Dir myDir;
-
+        objPosArrayList* playerPosList;   
         GameMechs* mainGameMechsRef;
-        Food* foodRef;
+        Food* foodRef; 
+             
+        enum Dir myDir;
 };
 
 #endif

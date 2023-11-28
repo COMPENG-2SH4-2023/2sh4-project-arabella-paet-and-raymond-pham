@@ -13,14 +13,14 @@ Food::Food(GameMechs* thisGMRef)
 
 Food::~Food()
 {
-    //nothing created on heap through food class
+    //nothing created on heap through food class yet
 }
 
 void Food::generateFood(objPosArrayList* blockOff)
 {
     srand(time(NULL));
 
-    int xCandidate = 0;
+    int xCandidate = 0;              
     int yCandidate = 0;
     bool is_pos = false;                                                      //condition for if coordinates have been generated or not
     objPos bodyElement;
@@ -29,9 +29,9 @@ void Food::generateFood(objPosArrayList* blockOff)
     {
         xCandidate = rand() % (mainGameMechsRef->getBoardSizeX() - 2) + 1; 
         yCandidate = rand() % (mainGameMechsRef->getBoardSizeY() - 2) + 1;
-        objPos tempPos(xCandidate, yCandidate, 'o');                          //created a tempPos object that has the random coordinates 
+        objPos tempPos(xCandidate, yCandidate, 'o');                          //created a tempPos object that holds the generated random coordinates 
 
-        for(int bodyIndex = 0; bodyIndex < blockOff->getSize(); bodyIndex++)                          //iterating through each element within the snakes body (the list)
+        for(int bodyIndex = 0; bodyIndex < blockOff->getSize(); bodyIndex++)  //iterating through each element within the snakes body (the list)
         {
             blockOff->getElement(bodyElement, bodyIndex);
             if(tempPos.isPosEqual(&bodyElement) == true)                      //Checking if the coordinates of the randomly generated coordinates are the same as the current body element
@@ -50,7 +50,7 @@ void Food::generateFood(objPosArrayList* blockOff)
 
 }
 
-void Food::getFoodPos(objPos &returnPos)
+void Food::getFoodPos(objPos &returnPos)                                      //returns the food position of the food object
 {
     returnPos.setObjPos(foodPos);
 }
