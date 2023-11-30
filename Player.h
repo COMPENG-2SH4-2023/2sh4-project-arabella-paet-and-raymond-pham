@@ -20,7 +20,7 @@ class Player
         void movePlayer();
 
         //check if the newly positioned head overlaps with the objPos of the food
-        bool checkFoodConsumption(objPos head);
+        bool checkFoodConsumption(objPos head, char* foodSymbol);
 
         //increases the size of the list if the snake consumes a food
         void increasePlayerLength(objPos head);

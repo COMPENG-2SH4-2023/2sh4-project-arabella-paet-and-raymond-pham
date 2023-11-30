@@ -10,7 +10,7 @@
 
 #define NUM_FOOD 3
 
-class Food
+class Food 
 {
     private:
         objPosArrayList* foodBucket;
@@ -25,8 +25,11 @@ class Food
 
         //Getter
         objPosArrayList* getFoodPos();
+        int getSize();
 
         void generateFood(objPosArrayList* blockOff);
+        void add(objPos thisObj);
+        bool isExist(objPos thisObj);
 };
 
 #endif

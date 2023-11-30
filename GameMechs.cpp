@@ -9,6 +9,7 @@ GameMechs::GameMechs()
     score = 0;
     exitFlag = false;
     loseFlag = false;
+    superFoodFlag = false;
 
 
 }
@@ -21,6 +22,7 @@ GameMechs::GameMechs(int boardX, int boardY)
     score = 0;
     exitFlag = false;
     loseFlag = false;
+    superFoodFlag = false;
 }
 
 //Getters
@@ -32,6 +34,11 @@ bool GameMechs::getExitFlagStatus()
 bool GameMechs::getLoseFlagStatus()
 {
     return loseFlag;
+}
+
+bool GameMechs::getSuperFoodStatus()
+{
+    return superFoodFlag;
 }
 
 char GameMechs::getInput()
@@ -81,6 +88,16 @@ void GameMechs::setLoseFalse()
 void GameMechs::setLoseTrue()
 {
     loseFlag = true;
+}
+
+void GameMechs::setSuperFoodTrue()
+{
+    superFoodFlag = true;
+}
+
+void GameMechs::setSuperFoodFalse()
+{
+    superFoodFlag = false;
 }
 
 void GameMechs::setInput(char this_input)

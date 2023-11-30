@@ -7,7 +7,7 @@
 
 class objPosArrayList
 {
-    private:
+    protected:
         objPos* aList;
         int listSize; 
         int arrayCapacity; 

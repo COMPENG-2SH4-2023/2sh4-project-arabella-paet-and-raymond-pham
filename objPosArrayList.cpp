@@ -10,8 +10,6 @@ objPosArrayList::objPosArrayList()
     listSize = 0;
     aList = new objPos[ARRAY_MAX_CAP];
 
-    cout << "Default Constructor called." << endl;
-
 }
 
 

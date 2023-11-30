@@ -144,13 +144,11 @@ void DrawScreen(void)
         cout << endl;
     }
     cout << "Score: " << ptrGameMechs->getScore() << endl;
-    //cout << "Size List: " << foodBucket->getSize() << endl;
-    // for(foodIndex = 0; foodIndex < foodBucket->getSize(); foodIndex++)
-    // {
-    //     foodBucket->getElement(tempObj, foodIndex);
-    //     cout << "Food[" << foodIndex << "] (" << tempObj.x << ", " << tempObj.y << ")" << endl;
-    // }
 
+    if(ptrGameMechs->getSuperFoodStatus())                       //Display message if super food was eaten
+    {
+        cout << "YOU ATE A SUPER FOOD >:D!!!" << endl;
+    }
 
     if(ptrGameMechs->getLoseFlagStatus() == true)                 //If lose status is true (snake self-collision), print out the lose message and exit game
     {   

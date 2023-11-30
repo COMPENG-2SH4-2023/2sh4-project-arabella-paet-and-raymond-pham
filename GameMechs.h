@@ -15,6 +15,7 @@ class GameMechs
         char input;
         bool exitFlag;
         bool loseFlag;
+        bool superFoodFlag;
         int score;       
         
         int boardSizeX;
@@ -30,6 +31,7 @@ class GameMechs
         //Getters
         bool getExitFlagStatus();
         bool getLoseFlagStatus();
+        bool getSuperFoodStatus();
         char getInput();
         int getBoardSizeX();
         int getBoardSizeY();
@@ -40,6 +42,8 @@ class GameMechs
         void setExitTrue();
         void setLoseFalse();
         void setLoseTrue();
+        void setSuperFoodTrue();
+        void setSuperFoodFalse();
         void setInput(char this_input);
 
         void clearInput();

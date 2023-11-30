@@ -138,7 +138,7 @@ void Player::movePlayer()
 }
 
 //Checking if the snake ate a food obj
-bool Player::checkFoodConsumption(objPos head)
+bool Player::checkFoodConsumption(objPos head, char* foodSymbol)          //Pass by pointer for foodSymbol, so the function can return the symbol of the food that was consumed
 {
     int foodIndex;
     objPos foodElement;
@@ -152,6 +152,7 @@ bool Player::checkFoodConsumption(objPos head)
         foodBucket->getElement(tempFood, foodIndex);
         if(head.isPosEqual(&tempFood))
         {
+            *foodSymbol = tempFood.symbol;            
             return true;
             break;
         }
@@ -163,11 +164,25 @@ bool Player::checkFoodConsumption(objPos head)
 //Increasing the snakes body 
 void Player::increasePlayerLength(objPos head)
 {
-    playerPosList->insertHead(head);               //inserts the new head position
-    if(checkFoodConsumption(head) == true)         //checking if the new head position hit a food obj
+    char foodSymbol = '\0'; 
+    playerPosList->insertHead(head);                            //inserts the new head position
+    if(checkFoodConsumption(head, &foodSymbol) == true)         //checking if the new head position hit a food obj
     {
-        foodRef->generateFood(playerPosList);      //generates new food location after collision
-        mainGameMechsRef->incrementScore();        //increment game score
+        if(foodSymbol == '@')                                   //Checking if the food hit was a Super Food(super foods have sumbol @)
+        {
+            playerPosList->removeTail();                        //If Super Food was ate, increase the score by 10, but dont increase the snake
+            for(int i = 0; i < 10; i ++)
+            {
+                mainGameMechsRef->incrementScore();
+            }
+            mainGameMechsRef->setSuperFoodTrue();
+        }
+        else                                                   //If regular food was ate, increase the snake and score
+        {
+            mainGameMechsRef->incrementScore();        
+            mainGameMechsRef->setSuperFoodFalse();
+        }
+        foodRef->generateFood(playerPosList);                  //generates new food location after collision
     }
     else
     {   
