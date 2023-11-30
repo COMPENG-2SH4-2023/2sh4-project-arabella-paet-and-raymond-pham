@@ -151,7 +151,9 @@ bool Player::checkFoodConsumption(objPos head)          //Pass by pointer for fo
     {
         foodBucket->getElement(tempFood, foodIndex);
         if(head.isPosEqual(&tempFood))
-        {         
+        {
+            if (tempFood.getSymbol() == '@')
+                mainGameMechsRef->setSuperFoodTrue();         
             return true;
             break;
         }
@@ -167,8 +169,14 @@ void Player::increasePlayerLength(objPos head)
     playerPosList->insertHead(head);                            //inserts the new head position
     if(checkFoodConsumption(head) == true)         //checking if the new head position hit a food obj
     {
-        mainGameMechsRef->incrementScore();        
-        mainGameMechsRef->setSuperFoodTrue();
+        if (mainGameMechsRef->getSuperFoodStatus())
+        {
+            mainGameMechsRef->incrementSuperScore();
+            mainGameMechsRef->setSuperFoodFalse();
+        } else
+        {
+            mainGameMechsRef->incrementScore();        
+        }
         foodRef->generateFood(playerPosList);                  //generates new food location after collision
     }
     else

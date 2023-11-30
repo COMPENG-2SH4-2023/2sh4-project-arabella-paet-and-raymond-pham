@@ -48,6 +48,7 @@ class GameMechs
 
         void clearInput();
         void incrementScore();
+        void incrementSuperScore();
 };
 
 #endif

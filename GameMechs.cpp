@@ -117,4 +117,10 @@ void GameMechs::incrementScore()
     score++;
 }
 
+//increment score of the game when super food is eaten
+void GameMechs::incrementSuperScore()
+{
+    score+=10;
+}
+
 
