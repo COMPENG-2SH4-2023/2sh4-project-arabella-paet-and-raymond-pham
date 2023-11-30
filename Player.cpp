@@ -152,8 +152,14 @@ bool Player::checkFoodConsumption(objPos head)          //Pass by pointer for fo
         foodBucket->getElement(tempFood, foodIndex);
         if(head.isPosEqual(&tempFood))
         {
-            if (tempFood.getSymbol() == '@')
-                mainGameMechsRef->setSuperFoodTrue();         
+            if (tempFood.getSymbol() == '@')                  //Checking if the food that was eaten, was a Super Food
+            {    
+                mainGameMechsRef->setSuperFoodTrue();         //If Super Food was eaten, set flag to true, else false
+            }       
+            else 
+            {
+                mainGameMechsRef->setSuperFoodFalse();
+            }
             return true;
             break;
         }
@@ -166,22 +172,22 @@ bool Player::checkFoodConsumption(objPos head)          //Pass by pointer for fo
 void Player::increasePlayerLength(objPos head)
 {
     char foodSymbol = '\0'; 
-    playerPosList->insertHead(head);                            //inserts the new head position
-    if(checkFoodConsumption(head) == true)         //checking if the new head position hit a food obj
+    playerPosList->insertHead(head);                           //inserts the new head position
+    if(checkFoodConsumption(head) == true)                     //checking if the new head position hit a food obj
     {
-        if (mainGameMechsRef->getSuperFoodStatus())
+        if (mainGameMechsRef->getSuperFoodStatus())            //Checking if Super Food was eaten
         {
-            mainGameMechsRef->incrementSuperScore();
-            mainGameMechsRef->setSuperFoodFalse();
+            mainGameMechsRef->incrementSuperScore();           //If yes, add 10 to the score and dont grow the body
+            playerPosList->removeTail();
         } else
         {
-            mainGameMechsRef->incrementScore();        
+            mainGameMechsRef->incrementScore();                //If regular food was eaten, increment the score and body by 1
         }
         foodRef->generateFood(playerPosList);                  //generates new food location after collision
     }
     else
     {   
-        playerPosList->removeTail();               //if no collison occurs, remove the tail of the snake(which is the old tail position)
+        playerPosList->removeTail();                           //if no collison occurs, remove the tail of the snake(which is the old tail position)
     }
 }
 
