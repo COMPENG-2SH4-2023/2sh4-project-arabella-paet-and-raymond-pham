@@ -17,7 +17,6 @@ Food::Food(GameMechs* thisGMRef)
 Food::~Food()
 {
     delete foodBucket;
-    cout << "destrcutor Called" << endl;
 }
 
 void Food::generateFood(objPosArrayList* blockOff)
