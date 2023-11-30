@@ -1,10 +1,4 @@
 #include "Food.h"
-#include "MacUILib.h"
-#include "GameMechs.h"
-#include "objPos.h"
-#include <iostream>
-
-using namespace std;
 
 Food::Food(GameMechs* thisGMRef)
 {

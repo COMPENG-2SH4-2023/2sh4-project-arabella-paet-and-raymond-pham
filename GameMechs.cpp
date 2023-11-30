@@ -1,5 +1,4 @@
 #include "GameMechs.h"
-#include "MacUILib.h"
 
 //Constructors
 GameMechs::GameMechs()

@@ -7,6 +7,7 @@
 #include "objPos.h"
 #include "objPosArrayList.h"
 #include "GameMechs.h"
+#include "MacUILib.h"
 
 #define NUM_FOOD 3
 

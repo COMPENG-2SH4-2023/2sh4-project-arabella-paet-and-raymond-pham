@@ -1,7 +1,6 @@
 #include <iostream>
 #include "MacUILib.h"
 #include "objPos.h"
-
 #include "Player.h"
 #include "GameMechs.h"
 #include "Food.h"
