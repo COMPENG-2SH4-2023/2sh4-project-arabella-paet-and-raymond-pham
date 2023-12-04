@@ -24,7 +24,7 @@ void Food::generateFood(objPosArrayList* blockOff)
     objPos playerBody;
     objPos tempFood;
 
-    foodBucket->emptyList();                                                     //"Empty the List" so the foodBucket can overwrite the old foor objs with new food objs
+    foodBucket->emptyList();                                                     //"Empty the List" so the foodBucket can overwrite the old food objs with new food objs
 
     while(foodCount < NUM_FOOD)                                                  //Keep generating coordinates until each food item has a unique coordinate
     {

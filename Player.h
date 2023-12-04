@@ -28,6 +28,7 @@ class Player
 
         //check if head overlaps with body
         bool checkSelfCollision(objPos head);
+        
     private:
         objPosArrayList* playerPosList;   
         GameMechs* mainGameMechsRef;

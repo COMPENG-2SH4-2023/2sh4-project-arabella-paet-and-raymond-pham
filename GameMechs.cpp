@@ -45,8 +45,8 @@ char GameMechs::getInput()
     if (MacUILib_hasChar())
     {
         input = MacUILib_getChar();
-        if (input == 27)
-        {
+        if (input == 27)             //If escape key is pressed, exit our program
+        { 
             setExitTrue();
         }
     }

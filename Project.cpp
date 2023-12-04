@@ -122,6 +122,7 @@ void DrawScreen(void)
                 }
             }
 
+            //If a food object was printed from the foodBucket, skip and continue to next coordinate of the board
             if(isFood)
             {
                 continue;

@@ -12,7 +12,6 @@ objPosArrayList::objPosArrayList()
 
 }
 
-
 //Destructor
 objPosArrayList::~objPosArrayList()
 {

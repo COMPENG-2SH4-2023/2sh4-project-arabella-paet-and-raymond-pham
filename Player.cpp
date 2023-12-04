@@ -147,10 +147,10 @@ bool Player::checkFoodConsumption(objPos head)          //Pass by pointer for fo
 
     foodBucket = foodRef->getFoodPos();
 
-    for(foodIndex = 0; foodIndex < foodBucket->getSize(); foodIndex++)
+    for(foodIndex = 0; foodIndex < foodBucket->getSize(); foodIndex++) //Iterating through each food object inside the bucket
     {
         foodBucket->getElement(tempFood, foodIndex);
-        if(head.isPosEqual(&tempFood))
+        if(head.isPosEqual(&tempFood))                        //Checking the the new current head of the snake ate a food object
         {
             if (tempFood.getSymbol() == '@')                  //Checking if the food that was eaten, was a Super Food
             {    
@@ -170,8 +170,7 @@ bool Player::checkFoodConsumption(objPos head)          //Pass by pointer for fo
 
 //Increasing the snakes body 
 void Player::increasePlayerLength(objPos head)
-{
-    char foodSymbol = '\0'; 
+{ 
     playerPosList->insertHead(head);                           //inserts the new head position
     if(checkFoodConsumption(head) == true)                     //checking if the new head position hit a food obj
     {
@@ -179,7 +178,8 @@ void Player::increasePlayerLength(objPos head)
         {
             mainGameMechsRef->incrementSuperScore();           //If yes, add 10 to the score and dont grow the body
             playerPosList->removeTail();
-        } else
+        } 
+        else
         {
             mainGameMechsRef->incrementScore();                //If regular food was eaten, increment the score and body by 1
         }
@@ -202,6 +202,7 @@ bool Player::checkSelfCollision(objPos head)
         if (head.isPosEqual(&bodyElement))                                 // Checking if the head of the snake has collided with the current body element
         {
             isCollision = true;
+            break;
         }
     }
     return isCollision;
