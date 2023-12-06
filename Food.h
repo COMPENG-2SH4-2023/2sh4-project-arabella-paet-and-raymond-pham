@@ -9,7 +9,7 @@
 #include "GameMechs.h"
 #include "MacUILib.h"
 
-#define NUM_FOOD 3
+#define NUM_FOOD 3                   //Number of food items
 
 class Food 
 {

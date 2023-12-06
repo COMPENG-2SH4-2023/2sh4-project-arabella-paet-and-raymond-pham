@@ -63,9 +63,7 @@ void RunLogic(void)
 {
     ptrPlayer->updatePlayerDir();        //takes input from user for the player objects direction
     ptrPlayer->movePlayer();             //move player object and head wraparound logic
-    
     ptrGameMechs->clearInput();
-    
 }
 
 void DrawScreen(void)
